@@ -3,4 +3,14 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="primaryBlack">#343A40</color>
+    <color name="primaryBlue">#3D99D8</color>
+    <color name="sugarBlue">#7FE0E3</color>
+    <color name="primaryYellow">#FFE269</color>
+    <color name="lighterBlack">#4D5257</color>
+    <color name="darkBlue">#4A595E</color>
+    <color name="addDrinkButton">#328BC8</color>
+    <color name="plusButton">#3682B7</color>
+    <color name="minusButton">#3D99D8</color>
+    <color name="primaryWhite">#FBFBFB</color>
 </resources>
