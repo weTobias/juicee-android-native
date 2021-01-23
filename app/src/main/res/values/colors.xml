@@ -13,4 +13,9 @@
     <color name="plusButton">#3682B7</color>
     <color name="minusButton">#3D99D8</color>
     <color name="primaryWhite">#FBFBFB</color>
+    <color name="hintColor">#9A9A9A</color>
+    <color name="inputBorder">#E7E7E7</color>
+    <color name="inputBackground">#F6F6F6</color>
+    <color name="inputBorderFocused">#AEAEAE</color>
+    <color name="plusMinusButtonBackground">#F0F0F0</color>
 </resources>
