@@ -24,34 +24,33 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
+        style="@style/CustomInputLayoutStyle"
         android:layout_width="335dp"
         android:layout_height="65dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:textColorHint="@color/hintColor"
         app:hintTextColor="@color/inputBorderFocused"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
 
-        style="@style/CustomInputLayoutStyle">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:fontFamily="@font/roboto"
-            android:textColor="@color/primaryBlack"
-            android:textCursorDrawable="@null"
-            android:inputType="number"
             android:hint="Height (cm)"
-            android:paddingStart="16dp" />
+            android:inputType="number"
+            android:paddingStart="16dp"
+            android:textColor="@color/primaryBlack"
+            android:textCursorDrawable="@null" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
         android:layout_width="335dp"
         android:layout_height="65dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="0dp"
         android:textColorHint="@color/hintColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +74,7 @@
         android:id="@+id/textInputLayout5"
         android:layout_width="335dp"
         android:layout_height="65dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="0dp"
         android:textColorHint="@color/hintColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +98,7 @@
         android:id="@+id/textInputLayout6"
         android:layout_width="335dp"
         android:layout_height="65dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="0dp"
         android:textColorHint="@color/hintColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -177,7 +176,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button"
+            android:id="@+id/minusButton"
             style="@style/plusMinusButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -188,7 +187,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button2"
+            android:id="@+id/plusButton"
             style="@style/plusMinusButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -204,12 +203,12 @@
             android:layout_height="59dp"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-            app:layout_constraintEnd_toStartOf="@+id/button2"
-            app:layout_constraintStart_toEndOf="@+id/button"
+            app:layout_constraintEnd_toStartOf="@+id/plusButton"
+            app:layout_constraintStart_toEndOf="@+id/minusButton"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextNumber2"
+                android:id="@+id/waterNumberInitialForm"
                 style="@android:style/Widget.Material.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="51dp"
