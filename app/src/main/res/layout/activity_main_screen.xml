@@ -1,6 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryWhite"/>
+    android:background="@color/primaryWhite"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/mainScreenPieChart"
+        android:layout_width="270dp"
+        android:layout_height="270dp"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></com.github.mikephil.charting.charts.PieChart>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:background="@drawable/main_screen_bottom_section"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnMainAdd"
+            style="@style/mainScreenButtons"
+            android:layout_width="150dp"
+            android:layout_height="230dp"
+            android:backgroundTint="@color/addDrinkButton"
+            android:elevation="2dp"
+            android:text="ADD DRINK"
+            android:textSize="28dp"
+            android:textStyle="bold"
+            app:cornerRadius="14dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMainPlus"
+                style="@style/mainScreenButtons"
+                android:layout_width="170dp"
+                android:layout_height="110dp"
+                android:backgroundTint="@color/plusButton"
+                android:elevation="1dp"
+                android:text="+"
+                android:textSize="50dp"
+                app:shapeAppearanceOverlay="@style/mainScreenPlusMinusShape" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMainMinus"
+                style="@style/mainScreenButtons"
+                android:layout_width="170dp"
+                android:layout_height="85dp"
+                android:backgroundTint="@color/minusButton"
+                android:text="-"
+                android:textSize="50dp"
+                app:shapeAppearanceOverlay="@style/mainScreenPlusMinusShape" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/mainWaterCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:fontFamily="@font/montserrat"
+        android:textStyle="bold"
+        android:text="Water glasses: "
+        android:textColor="@color/primaryWhite"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+         />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainScreenPieChart">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/carouselCircles"
+            android:backgroundTint="@color/primaryBlack" />
+
+        <com.google.android.material.button.MaterialButton style="@style/carouselCircles" />
+
+        <com.google.android.material.button.MaterialButton style="@style/carouselCircles" />
+
+        <com.google.android.material.button.MaterialButton style="@style/carouselCircles" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.juicee
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -27,9 +28,13 @@ class InitialFormActivity : AppCompatActivity() {
                 waterNumberInitialForm.setText(number.toString())
             }
         }
+
+        val btnStart = findViewById<Button>(R.id.initalFormConfirmButton)
+        btnStart.setOnClickListener {
+            val intent = Intent(this, MainScreenActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+        }
     }
 
-    override fun onBackPressed() {
-        //super.onBackPressed()
-    }
 }

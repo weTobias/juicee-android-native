@@ -2,9 +2,10 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/primaryBlue</item>
+        <item name="colorPrimaryDark">@color/primaryBlack</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@null</item>
     </style>
     <style name="CustomInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@color/input_stroke_color</item>
@@ -35,6 +36,43 @@
         <item name="cornerRadius">20dp</item>
         <item name="rippleColor">@color/sugarBlue</item>
         <item name="android:layout_height">60dp</item>
+    </style>
+    <style name="mainScreenButtons" parent="Widget.MaterialComponents.Button">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+    <style name="mainScreenPlusMinusShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomRight">6dp</item>
+        <item name="cornerSizeTopRight">6dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+    <style name="water_4_250">
+
+        <item name="android:textSize">
+            16dp
+        </item>
+
+        <item name="android:textColor">
+            #FBFBFB
+        </item>
+
+    </style>
+    <style name="carouselCircles" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">15dp</item>
+        <item name="android:layout_height">15dp</item>
+        <item name="android:text"></item>
+        <item name="cornerRadius">20dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="backgroundTint">@color/carouselCirclesNotActive</item>
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginRight">6dp</item>
     </style>
 
 </resources>
