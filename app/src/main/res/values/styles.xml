@@ -6,9 +6,11 @@
         <item name="colorPrimaryDark">@color/primaryBlack</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:statusBarColor">@color/primaryBlack</item>
     </style>
     <style name="CustomInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@color/input_stroke_color</item>
+        <item name="android:required">true</item>
     </style>
     <style name="GenderButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="backgroundTint">@color/gender_button_background</item>

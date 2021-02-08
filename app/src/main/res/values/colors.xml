@@ -16,8 +16,9 @@
     <color name="hintColor">#9A9A9A</color>
     <color name="inputBorder">#E7E7E7</color>
     <color name="inputBackground">#F6F6F6</color>
-    <color name="inputBorderFocused">#AEAEAE</color>
+    <color name="inputBorderFocused">#6d6d6d</color>
     <color name="plusMinusButtonBackground">#F0F0F0</color>
     <color name="pieCenter">#4D5257</color>
     <color name="carouselCirclesNotActive">#C1CBD3</color>
+    <color name="genderButtonBorderFocused">#AEAEAE</color>
 </resources>

@@ -98,6 +98,6 @@ class MainScreenActivity : AppCompatActivity() {
         pieChart.data = data
         pieChart.highlightValues(null)
         pieChart.invalidate()
-        pieChart.animateXY(1000, 1000)
+        pieChart.animateXY(700, 700)
     }
 }
