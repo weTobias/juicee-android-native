@@ -1,4 +1,4 @@
-package com.example.juicee
+package at.fhj.juicee
 
 import org.junit.Test
 
