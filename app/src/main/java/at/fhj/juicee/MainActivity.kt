@@ -1,4 +1,4 @@
-package com.example.juicee
+package at.fhj.juicee
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

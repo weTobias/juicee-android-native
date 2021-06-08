@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "265540229547",
+    "project_id": "juicee-4d3ed",
+    "storage_bucket": "juicee-4d3ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265540229547:android:ad049f15fd981b29395aee",
+        "android_client_info": {
+          "package_name": "at.fhj.juicee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "265540229547-1jv5rvo1uquv1bdmlfe0r1gk500dfurt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_fVick2UVj7stEwioIXAf82U2SKmM8dQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265540229547-1jv5rvo1uquv1bdmlfe0r1gk500dfurt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
