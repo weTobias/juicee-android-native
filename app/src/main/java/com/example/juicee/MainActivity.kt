@@ -3,12 +3,7 @@ package com.example.juicee
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
 import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_start_screen.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
