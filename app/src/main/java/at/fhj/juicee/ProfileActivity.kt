@@ -19,8 +19,8 @@ class ProfileActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-        var name : TextView? = findViewById(R.id.user_name)
-        var mail : TextView?  = findViewById(R.id.mail)
+        val name : TextView? = findViewById(R.id.user_name)
+        val mail : TextView?  = findViewById(R.id.mail)
         val logout : Button? =findViewById(R.id.google_SignIn)
 
         val acct : GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(applicationContext)

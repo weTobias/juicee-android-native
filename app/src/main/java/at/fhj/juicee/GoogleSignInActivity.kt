@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.*
+import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -29,9 +30,7 @@ class GoogleSignInActivity : AppCompatActivity() {
         currentUser= auth.currentUser
 
         if(currentUser != null){
-            val name = currentUser!!.displayName
-            val email = currentUser!!.email
-            val intent = Intent(applicationContext,ProfileActivity::class.java)
+            val intent = Intent(applicationContext,InitialFormActivity::class.java)
             startActivity(intent)
         }
     }
@@ -42,7 +41,7 @@ class GoogleSignInActivity : AppCompatActivity() {
         setContentView(R.layout.activity_google_sign_in)
 
 
-        val verify = findViewById<Button>(R.id.google_SignIn)
+        val verify = findViewById<SignInButton>(R.id.google_SignIn)
         auth = Firebase.auth
 
         createRequest()
@@ -79,7 +78,7 @@ class GoogleSignInActivity : AppCompatActivity() {
                 val account = result.getResult(ApiException::class.java)!!
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
-                val intent = Intent(applicationContext,ProfileActivity::class.java)
+                val intent = Intent(applicationContext,InitialFormActivity::class.java)
                 startActivity(intent)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
