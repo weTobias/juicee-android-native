@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
         val btnStart = findViewById<Button>(R.id.startButton)
         btnStart.setOnClickListener {
-            val intent = Intent(this, InitialFormActivity::class.java)
+            val intent = Intent(this, GoogleSignInActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }

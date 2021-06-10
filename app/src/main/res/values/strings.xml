@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Juicee</string>
+    <string name="verify">Button</string>
+    <string name="logout">Logout</string>
+    <string name="login">Login</string>
+    <string name="user_name">Username</string>
+    <string name="mail">Mail</string>
 </resources>
