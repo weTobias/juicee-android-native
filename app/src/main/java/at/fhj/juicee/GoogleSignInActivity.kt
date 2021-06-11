@@ -3,7 +3,6 @@ package at.fhj.juicee
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.SignInButton
@@ -23,7 +22,6 @@ class GoogleSignInActivity : AppCompatActivity() {
     var currentUser: FirebaseUser? = null
 
 
-
     override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -39,6 +37,7 @@ class GoogleSignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_sign_in)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
 
         val verify = findViewById<SignInButton>(R.id.google_SignIn)
@@ -49,7 +48,6 @@ class GoogleSignInActivity : AppCompatActivity() {
         verify.setOnClickListener {
             signIn()
         }
-
     }
 
     private fun createRequest() {
@@ -89,7 +87,6 @@ class GoogleSignInActivity : AppCompatActivity() {
     }
 
 
-
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
@@ -103,6 +100,5 @@ class GoogleSignInActivity : AppCompatActivity() {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                 }
             }
-
     }
 }

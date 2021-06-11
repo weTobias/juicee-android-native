@@ -9,6 +9,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_screen)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val btnStart = findViewById<Button>(R.id.startButton)
         btnStart.setOnClickListener {

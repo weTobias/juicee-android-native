@@ -10,6 +10,7 @@ class InitialFormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial_form)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val btnPlus = findViewById<Button>(R.id.plusButton)
         val btnMinus = findViewById<Button>(R.id.minusButton)

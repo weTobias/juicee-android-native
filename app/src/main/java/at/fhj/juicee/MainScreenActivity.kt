@@ -1,13 +1,18 @@
 package at.fhj.juicee
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
@@ -19,6 +24,7 @@ class MainScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val pieChart = findViewById<PieChart>(R.id.mainScreenPieChart)
         pieChart.setCenterTextSize(16f)
@@ -60,7 +66,20 @@ class MainScreenActivity : AppCompatActivity() {
                 waterCount.text = tempText
             }
         }
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater : MenuInflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val intent = Intent(applicationContext,ProfileActivity::class.java)
+        when(item.itemId){
+            R.id.Settings-> startActivity(intent)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setPieData(pieChart: PieChart){
@@ -74,7 +93,6 @@ class MainScreenActivity : AppCompatActivity() {
         val colors = listOf<Int>(ContextCompat.getColor(this, R.color.primaryBlue),
             ContextCompat.getColor(this, R.color.sugarBlue),
             ContextCompat.getColor(this, R.color.primaryYellow))
-
 
 
         dataSet.setDrawIcons(false)
