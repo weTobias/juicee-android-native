@@ -9,4 +9,5 @@
     <string name="profile">Profile</string>>
     <string name="please">Please sign in with Google</string>>
     <string name="yourProfile">Your Profile</string>>
+    <string name="imageGoogleDescription">This is the google image</string>>
 </resources>

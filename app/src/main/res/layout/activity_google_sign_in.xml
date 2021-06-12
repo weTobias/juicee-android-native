@@ -28,7 +28,8 @@
         app:layout_constraintBottom_toTopOf="@+id/google_SignIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_google" />
+        app:srcCompat="@drawable/ic_google"
+        android:contentDescription="@string/imageGoogleDescription" />
 
     <TextView
         android:id="@+id/textView3"

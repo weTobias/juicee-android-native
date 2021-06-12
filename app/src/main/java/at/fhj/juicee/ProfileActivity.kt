@@ -27,7 +27,7 @@ class ProfileActivity : AppCompatActivity() {
 
             name?.text = acct?.displayName
             mail?.text = acct?.email
-            //image?.setImageURI(acct?.photoUrl)
+            image?.setImageURI(acct?.photoUrl)
 
 
         logout?.setOnClickListener {
