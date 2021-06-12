@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "265540229547-69dkspvbjbs8la7dqn21nrgb64mphkmo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "at.fhj.juicee",
+            "certificate_hash": "631af69307f01422129de517e98a294f7740ff9c"
+          }
+        },
+        {
           "client_id": "265540229547-1jv5rvo1uquv1bdmlfe0r1gk500dfurt.apps.googleusercontent.com",
           "client_type": 3
         }
