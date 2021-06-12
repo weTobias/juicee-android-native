@@ -6,5 +6,7 @@
     <string name="user_name">Username</string>
     <string name="mail">Mail</string>
     <string name="profileImageDescription">This is the profile image</string>
-    <string name="profile">Profile</string>
+    <string name="profile">Profile</string>>
+    <string name="please">Please sign in with Google</string>>
+    <string name="yourProfile">Your Profile</string>>
 </resources>
