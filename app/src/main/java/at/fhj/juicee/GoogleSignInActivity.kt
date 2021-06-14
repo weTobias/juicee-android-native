@@ -11,6 +11,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
@@ -19,7 +21,8 @@ class GoogleSignInActivity : AppCompatActivity() {
     private val RC_SIGN_IN: Int = 0
     private var googleSignInClient: GoogleSignInClient? = null
     private lateinit var auth: FirebaseAuth
-    var currentUser: FirebaseUser? = null
+    private var currentUser: FirebaseUser? = null
+    private val db: FirebaseFirestore = Firebase.firestore
 
 
     override fun onStart() {
@@ -28,8 +31,20 @@ class GoogleSignInActivity : AppCompatActivity() {
         currentUser= auth.currentUser
 
         if(currentUser != null){
-            val intent = Intent(applicationContext,InitialFormActivity::class.java)
-            startActivity(intent)
+            val userInformationRef = db.collection("userInformation").document(currentUser!!.uid)
+            userInformationRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        val intent = Intent(applicationContext,MainScreenActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        val intent = Intent(applicationContext,InitialFormActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(TAG, "get failed with ", exception)
+                }
         }
     }
 
@@ -76,6 +91,7 @@ class GoogleSignInActivity : AppCompatActivity() {
                 val account = result.getResult(ApiException::class.java)!!
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
+
                 val intent = Intent(applicationContext,InitialFormActivity::class.java)
                 startActivity(intent)
             } catch (e: ApiException) {

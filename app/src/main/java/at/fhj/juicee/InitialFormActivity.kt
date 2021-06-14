@@ -10,15 +10,40 @@ import at.fhj.juicee.models.Gender
 import at.fhj.juicee.models.UserInformation
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class InitialFormActivity : AppCompatActivity() {
+    private val TAG : String = "InitialFormActivity"
+    private lateinit var db: FirebaseFirestore
+    private var currentUser: FirebaseUser? = null
+
+    override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+
+        if(currentUser != null){
+            val userInformationRef = db.collection("userInformation").document(currentUser!!.uid)
+            userInformationRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        val intent = Intent(applicationContext,MainScreenActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(TAG, "get failed with ", exception)
+                }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val db = Firebase.firestore
-        val currentUser = Firebase.auth.currentUser
+        db = Firebase.firestore
+        currentUser = Firebase.auth.currentUser
         val userId = currentUser?.uid
 
         setContentView(R.layout.activity_initial_form)
@@ -61,7 +86,7 @@ class InitialFormActivity : AppCompatActivity() {
                     val intent = Intent(this, MainScreenActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                     startActivity(intent)
-                }.addOnFailureListener { e -> Log.w("MAIN", "Error writing document", e) }
+                }.addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
             }
         }
     }
