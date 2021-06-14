@@ -29,7 +29,7 @@ class InitialFormActivity : AppCompatActivity() {
             val userInformationRef = db.collection("userInformation").document(currentUser!!.uid)
             userInformationRef.get()
                 .addOnSuccessListener { document ->
-                    if (document != null) {
+                    if (document.exists()) {
                         val intent = Intent(applicationContext,MainScreenActivity::class.java)
                         startActivity(intent)
                     }

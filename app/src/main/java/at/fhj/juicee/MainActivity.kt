@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
                 val userInformationRef = db.collection("userInformation").document(currentUser!!.uid)
                 userInformationRef.get()
                     .addOnSuccessListener { document ->
-                        if (document != null) {
+                        if (document.exists()) {
                             val intent = Intent(applicationContext,MainScreenActivity::class.java)
                             startActivity(intent)
                         } else {
@@ -41,10 +41,11 @@ class MainActivity : AppCompatActivity() {
                     .addOnFailureListener { exception ->
                         Log.d(TAG, "get failed with ", exception)
                     }
+            } else {
+                val intent = Intent(this, GoogleSignInActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                startActivity(intent)
             }
-            val intent = Intent(this, GoogleSignInActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-            startActivity(intent)
         }
 
 
