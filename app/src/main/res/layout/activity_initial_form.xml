@@ -36,6 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/heightInput"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:fontFamily="@font/roboto"
@@ -60,14 +61,15 @@
         style="@style/CustomInputLayoutStyle">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/weightInput"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:fontFamily="@font/roboto"
-            android:textColor="@color/primaryBlack"
-            android:textCursorDrawable="@null"
-            android:inputType="number"
             android:hint="Weight (kg)"
-            android:paddingStart="16dp" />
+            android:inputType="number"
+            android:paddingStart="16dp"
+            android:textColor="@color/primaryBlack"
+            android:textCursorDrawable="@null" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -84,14 +86,15 @@
         style="@style/CustomInputLayoutStyle">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ageInput"
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:textColor="@color/primaryBlack"
             android:fontFamily="@font/roboto"
-            android:textCursorDrawable="@null"
-            android:inputType="number"
             android:hint="Age"
-            android:paddingStart="16dp" />
+            android:inputType="number"
+            android:paddingStart="16dp"
+            android:textColor="@color/primaryBlack"
+            android:textCursorDrawable="@null" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -108,14 +111,15 @@
         style="@style/CustomInputLayoutStyle">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/activityLevelInput"
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:textColor="@color/primaryBlack"
             android:fontFamily="@font/roboto"
-            android:textCursorDrawable="@null"
-            android:inputType="number"
             android:hint="Activity Level"
-            android:paddingStart="16dp" />
+            android:inputType="number"
+            android:paddingStart="16dp"
+            android:textColor="@color/primaryBlack"
+            android:textCursorDrawable="@null" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButtonToggleGroup
