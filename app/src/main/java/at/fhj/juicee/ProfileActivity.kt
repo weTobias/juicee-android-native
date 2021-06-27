@@ -3,7 +3,7 @@ package at.fhj.juicee
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageView
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -18,16 +18,27 @@ class ProfileActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+
+        val back : ImageButton? = findViewById(R.id.backButton)
         val name : TextView? = findViewById(R.id.user_name)
-        val mail : TextView?  = findViewById(R.id.mail)
         val logout : Button? =findViewById(R.id.google_SignIn)
-        val image: ImageView? = findViewById(R.id.profileImage)
+        val edit : Button? =findViewById(R.id.initalFormConfirmButton)
+        //val image: ImageView? = findViewById(R.id.profileImage)
 
         val acct : GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(applicationContext)
 
             name?.text = acct?.displayName
-            mail?.text = acct?.email
-            image?.setImageURI(acct?.photoUrl)
+            //image?.setImageURI(acct?.photoUrl)
+
+        edit?.setOnClickListener{
+            val intent = Intent(applicationContext,EditProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        back?.setOnClickListener {
+            val intent = Intent(applicationContext,MainScreenActivity::class.java)
+            startActivity(intent)
+        }
 
 
         logout?.setOnClickListener {

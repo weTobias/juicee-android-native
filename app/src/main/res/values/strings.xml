@@ -5,9 +5,16 @@
     <string name="login">Login</string>
     <string name="user_name">Username</string>
     <string name="mail">Mail</string>
-    <string name="profileImageDescription">This is the profile image</string>
     <string name="profile">Profile</string>>
     <string name="please">Please sign in with Google</string>>
     <string name="yourProfile">Your Profile</string>>
-    <string name="imageGoogleDescription">This is the google image</string>>
+    <string name="edit">Edit Profile</string>
+    <string name="confirm_changes">Confirm Changes</string>
+    <string name="profile_description">Description for Profile Description</string>
+    <string name="profileImageDescription">This is the profile image</string>
+    <string name="profile_description_text">Test</string>>
+    <string name="imageGoogleDescription">This is the google image</string>
+    <string name="back_button_description">Back Button Description</string>
+    <string name="edit_profile_image_description">Edit Profile Image Description</string>
+    <string name="edit_activity_level_description">Edit Activity Level Description</string>>
 </resources>
