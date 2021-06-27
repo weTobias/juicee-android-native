@@ -1,6 +1,6 @@
 package at.fhj.juicee.models
 
 data class BeverageConsumption(
-    val beverage: Beverage,
-    var consumptionInMl: Int? = null
+    val beverage: Beverage = Beverage(),
+    var consumptionInMl: Int = 0
 )
