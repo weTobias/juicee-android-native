@@ -21,9 +21,15 @@ class InitialFormActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private var currentUser: FirebaseUser? = null
 
-    override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
+        db = Firebase.firestore
+        currentUser = Firebase.auth.currentUser
+        val userId = currentUser?.uid
 
         if(currentUser != null){
             val userInformationRef = db.collection("userInformation").document(currentUser!!.uid)
@@ -38,13 +44,6 @@ class InitialFormActivity : AppCompatActivity() {
                     Log.d(TAG, "get failed with ", exception)
                 }
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        db = Firebase.firestore
-        currentUser = Firebase.auth.currentUser
-        val userId = currentUser?.uid
 
         setContentView(R.layout.activity_initial_form)
         supportActionBar?.setDisplayShowTitleEnabled(false)

@@ -3,6 +3,7 @@ package at.fhj.juicee
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.SignInButton
@@ -14,6 +15,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import org.w3c.dom.Text
 
 
 class GoogleSignInActivity : AppCompatActivity() {
@@ -24,11 +26,13 @@ class GoogleSignInActivity : AppCompatActivity() {
     private var currentUser: FirebaseUser? = null
     private val db: FirebaseFirestore = Firebase.firestore
 
-
-    override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        currentUser= auth.currentUser
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
+        currentUser = Firebase.auth.currentUser
 
         if(currentUser != null){
             val userInformationRef = db.collection("userInformation").document(currentUser!!.uid)
@@ -46,16 +50,12 @@ class GoogleSignInActivity : AppCompatActivity() {
                     Log.d(TAG, "get failed with ", exception)
                 }
         }
-    }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_sign_in)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
 
         val verify = findViewById<SignInButton>(R.id.google_SignIn)
+        (verify.getChildAt(0) as TextView).text = "Log in with Google"
         auth = Firebase.auth
 
         createRequest()
@@ -91,9 +91,6 @@ class GoogleSignInActivity : AppCompatActivity() {
                 val account = result.getResult(ApiException::class.java)!!
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
-
-                val intent = Intent(applicationContext,InitialFormActivity::class.java)
-                startActivity(intent)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e)
@@ -111,6 +108,8 @@ class GoogleSignInActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     currentUser= auth.currentUser
+                    val intent = Intent(applicationContext,InitialFormActivity::class.java)
+                    startActivity(intent)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)

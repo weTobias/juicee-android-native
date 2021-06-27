@@ -43,6 +43,7 @@ class MainScreenActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         db = Firebase.firestore
         currentUser = Firebase.auth.currentUser
         if(currentUser != null){
@@ -90,7 +91,6 @@ class MainScreenActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setupScreen(dailyBeverageConsumption: DailyBeverageConsumption) {
         setContentView(R.layout.activity_main_screen)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val pieChart = findViewById<PieChart>(R.id.mainScreenPieChart)
         pieChart.setCenterTextSize(16f)
