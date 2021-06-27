@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/HeightInputLayout"
         style="@style/CustomInputLayoutStyle"
         android:layout_width="335dp"
         android:layout_height="65dp"
@@ -48,14 +48,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
+        android:id="@+id/editWeightInputLayout"
         android:layout_width="335dp"
         android:layout_height="65dp"
         android:layout_marginTop="0dp"
         android:textColorHint="@color/hintColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/HeightInputLayout"
         app:hintTextColor="@color/inputBorderFocused"
 
         style="@style/CustomInputLayoutStyle">
@@ -73,14 +73,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout5"
+        android:id="@+id/AgeInputLayout"
         android:layout_width="335dp"
         android:layout_height="65dp"
         android:layout_marginTop="0dp"
         android:textColorHint="@color/hintColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/editWeightInputLayout"
         app:hintTextColor="@color/inputBorderFocused"
 
         style="@style/CustomInputLayoutStyle">
@@ -98,14 +98,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout6"
+        android:id="@+id/activityLevelInputLayout"
         android:layout_width="335dp"
         android:layout_height="65dp"
         android:layout_marginTop="0dp"
         android:textColorHint="@color/hintColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
+        app:layout_constraintTop_toBottomOf="@+id/AgeInputLayout"
         app:hintTextColor="@color/inputBorderFocused"
 
         style="@style/CustomInputLayoutStyle">
@@ -131,7 +131,7 @@
         app:checkedButton="@+id/buttonMale"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6"
+        app:layout_constraintTop_toBottomOf="@+id/activityLevelInputLayout"
         app:selectionRequired="true"
         app:singleSelection="true">
 
