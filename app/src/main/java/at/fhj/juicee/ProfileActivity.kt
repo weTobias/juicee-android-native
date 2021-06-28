@@ -96,9 +96,10 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         back?.setOnClickListener {
-            val intent = Intent(applicationContext,MainScreenActivity::class.java)
-            startActivity(intent)
+            onBackPressed()
         }
+
+
 
 
         logout?.setOnClickListener {
@@ -107,5 +108,10 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(intent)
             Firebase.auth.signOut()
         }
+    }
+
+    override fun onBackPressed() {
+        finish()
+        super.onBackPressed()
     }
 }

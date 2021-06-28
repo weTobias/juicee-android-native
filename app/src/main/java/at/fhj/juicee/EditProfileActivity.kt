@@ -48,7 +48,6 @@ class EditProfileActivity : AppCompatActivity() {
 
         loadImageKey()
 
-
         image = findViewById(R.id.editProfileImage)
         storage = Firebase.storage
         storageReference = storage.reference
@@ -89,8 +88,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         //Go Back to Profile
         back?.setOnClickListener {
-            val intent = Intent(applicationContext,ProfileActivity::class.java)
-            startActivity(intent)
+            onBackPressed()
         }
 
         btnSubmit?.setOnClickListener{
@@ -134,9 +132,9 @@ class EditProfileActivity : AppCompatActivity() {
         val randomKey : String = UUID.randomUUID().toString()
 
         //set the key of the image in the shared preferences
-        imageKey(randomKey)
+        imageKey(uid)
 
-        val riversRef = storageReference.child("images/$randomKey")
+        val riversRef = storageReference.child("images/$uid")
         //Title of Dialog
         pd.setTitle("Uploading Image")
         pd.show()
@@ -171,5 +169,10 @@ class EditProfileActivity : AppCompatActivity() {
         if (key != null) {
             imageKey = key
         }
+    }
+
+    override fun onBackPressed() {
+        finish()
+        super.onBackPressed()
     }
 }
