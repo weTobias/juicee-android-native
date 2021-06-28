@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter
 class InitialFormActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private var currentUser: FirebaseUser? = null
+    private var userId: String? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +33,7 @@ class InitialFormActivity : AppCompatActivity() {
         }
         db = Firebase.firestore
         currentUser = Firebase.auth.currentUser
-        val userId = currentUser?.uid
+        userId = currentUser?.uid
 
         if(currentUser != null){
             val userInformationRef = db.collection("userInformation").document(currentUser!!.uid)
@@ -41,14 +42,18 @@ class InitialFormActivity : AppCompatActivity() {
                     if (document.exists()) {
                         val intent = Intent(applicationContext,MainScreenActivity::class.java)
                         startActivity(intent)
+                        finish()
+                    } else {
+                        setupScreen()
                     }
                 }
                 .addOnFailureListener {
-                    val intent = Intent(applicationContext,MainActivity::class.java)
-                    startActivity(intent)
+                    redirectToStart()
                 }
         }
-
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setupScreen() {
         setContentView(R.layout.activity_initial_form)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
@@ -82,7 +87,7 @@ class InitialFormActivity : AppCompatActivity() {
             }
             val userInformation = UserInformation(heightInput.text.toString().toFloat(), weightInput.text.toString().toFloat(), ageInput.text.toString().toInt(), activityLevelInput.text.toString().toInt(), gender)
             if (userId != null) {
-                db.collection("userInformation").document(userId).set(userInformation).addOnSuccessListener {
+                db.collection("userInformation").document(userId!!).set(userInformation).addOnSuccessListener {
                     db.collection("beverages").document("water").get().addOnSuccessListener { document ->
                         if (document.exists()) {
                             val dailyBeverageConsumption = DailyBeverageConsumption()
@@ -96,18 +101,24 @@ class InitialFormActivity : AppCompatActivity() {
                                 val intent = Intent(this, MainScreenActivity::class.java)
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                                 startActivity(intent)
+                                finish()
                             }
                         }
                     }.addOnFailureListener {
-                        val intent = Intent(applicationContext,MainActivity::class.java)
-                        startActivity(intent)
+                        redirectToStart()
                     }
                 }.addOnFailureListener {
-                    val intent = Intent(applicationContext,MainActivity::class.java)
-                    startActivity(intent)
+                    redirectToStart()
                 }
             }
         }
     }
-
+    private fun redirectToStart() {
+        val intent = Intent(applicationContext,MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
 }

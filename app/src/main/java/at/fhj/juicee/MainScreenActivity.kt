@@ -1,21 +1,22 @@
 package at.fhj.juicee
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import at.fhj.juicee.models.Beverage
 import at.fhj.juicee.models.BeverageConsumption
@@ -34,6 +35,7 @@ import com.google.firebase.ktx.Firebase
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+
 class MainScreenActivity : AppCompatActivity() {
     private val TAG : String = "MainScreenActivity"
     private lateinit var db: FirebaseFirestore
@@ -51,33 +53,32 @@ class MainScreenActivity : AppCompatActivity() {
             userInformationRef.get()
                 .addOnSuccessListener { document ->
                     if (!document.exists()) {
-                        val intent = Intent(applicationContext,MainActivity::class.java)
-                        startActivity(intent)
+                        redirectToStart()
+                    } else {
+                        val userId = currentUser?.uid
+                        var dailyBeverageConsumption = DailyBeverageConsumption()
+                        val docRef = db.collection("dailyBeverageConsumptions").document(userId.toString()).collection("dailyConsumptions").document(
+                            (LocalDateTime.now()).format(
+                                DateTimeFormatter.BASIC_ISO_DATE))
+                        docRef.get().addOnSuccessListener { consumption ->
+                            if (consumption.exists()) {
+                                dailyBeverageConsumption = consumption.toObject<DailyBeverageConsumption>()!!
+                                setupScreen(dailyBeverageConsumption)
+                            } else {
+                                docRef.set(dailyBeverageConsumption).addOnSuccessListener { setupScreen(dailyBeverageConsumption) }.addOnFailureListener { _ ->
+                                    redirectToStart()
+                                }
+                            }
+                        }.addOnFailureListener { _ ->
+                            redirectToStart()
+                        }
                     }
                 }
                 .addOnFailureListener { _ ->
-                    val intent = Intent(applicationContext,MainActivity::class.java)
-                    startActivity(intent)
+                    redirectToStart()
                 }
-        }
-        val userId = currentUser?.uid
-        var dailyBeverageConsumption = DailyBeverageConsumption()
-        val docRef = db.collection("dailyBeverageConsumptions").document(userId.toString()).collection("dailyConsumptions").document(
-            (LocalDateTime.now()).format(
-                DateTimeFormatter.BASIC_ISO_DATE))
-        docRef.get().addOnSuccessListener { document ->
-            if (document.exists()) {
-                dailyBeverageConsumption = document.toObject<DailyBeverageConsumption>()!!
-                setupScreen(dailyBeverageConsumption)
-            } else {
-                docRef.set(dailyBeverageConsumption).addOnSuccessListener { setupScreen(dailyBeverageConsumption) }.addOnFailureListener { _ ->
-                    val intent = Intent(applicationContext,MainActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-        }.addOnFailureListener { _ ->
-            val intent = Intent(applicationContext,MainActivity::class.java)
-            startActivity(intent)
+        } else {
+            redirectToStart()
         }
     }
 
@@ -101,7 +102,7 @@ class MainScreenActivity : AppCompatActivity() {
 
         val pieChart = findViewById<PieChart>(R.id.mainScreenPieChart)
         pieChart.setCenterTextSize(16f)
-        pieChart.setCenterTextColor(ContextCompat.getColor(this, R.color.pieCenter))
+        pieChart.setCenterTextColor(applicationContext.getColor(R.color.pieCenter))
         pieChart.holeRadius = 48f
         pieChart.transparentCircleRadius = 0f
         val legend = pieChart.legend
@@ -146,8 +147,7 @@ class MainScreenActivity : AppCompatActivity() {
                             }
                 }
             }.addOnFailureListener { _ ->
-                val intent = Intent(applicationContext,MainActivity::class.java)
-                startActivity(intent)
+                redirectToStart()
             }
         }
         btnMinus.setOnClickListener{
@@ -170,11 +170,19 @@ class MainScreenActivity : AppCompatActivity() {
                         }
                     }
                 }.addOnFailureListener { _ ->
-                    val intent = Intent(applicationContext,MainActivity::class.java)
-                    startActivity(intent)
+                    redirectToStart()
                 }
             }
         }
+    }
+
+    private fun redirectToStart() {
+        val intent = Intent(applicationContext,MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 
     private fun setPieData(pieChart: PieChart, dailyBeverageConsumption: DailyBeverageConsumption){
@@ -195,9 +203,9 @@ class MainScreenActivity : AppCompatActivity() {
 
         val dataSet = PieDataSet(drinkData, "")
 
-        val colors = listOf<Int>(ContextCompat.getColor(this, R.color.primaryBlue),
-            ContextCompat.getColor(this, R.color.sugarBlue),
-            ContextCompat.getColor(this, R.color.primaryYellow))
+        val colors = listOf<Int>(applicationContext.getColor(R.color.primaryBlue),
+            applicationContext.getColor(R.color.sugarBlue),
+            applicationContext.getColor(R.color.primaryYellow))
 
 
         dataSet.setDrawIcons(false)

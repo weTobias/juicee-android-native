@@ -84,6 +84,7 @@ class EditProfileActivity : AppCompatActivity() {
             }
             .addOnFailureListener { exception ->
                 Log.d(TAG, "get failed with ", exception)
+                redirectToStart()
             }
 
         //Go Back to Profile
@@ -174,5 +175,14 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onBackPressed() {
         finish()
         super.onBackPressed()
+    }
+
+    private fun redirectToStart() {
+        val intent = Intent(applicationContext,MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 }

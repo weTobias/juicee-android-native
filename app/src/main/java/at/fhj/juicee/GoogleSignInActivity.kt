@@ -40,28 +40,30 @@ class GoogleSignInActivity : AppCompatActivity() {
                     if (document.exists()) {
                         val intent = Intent(applicationContext,MainScreenActivity::class.java)
                         startActivity(intent)
+                        finish()
                     } else {
                         val intent = Intent(applicationContext,InitialFormActivity::class.java)
                         startActivity(intent)
+                        finish()
                     }
                 }
                 .addOnFailureListener {
-                    val intent = Intent(applicationContext,MainActivity::class.java)
-                    startActivity(intent)
+                    redirectToStart()
                 }
-        }
-        setContentView(R.layout.activity_google_sign_in)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        } else {
+            setContentView(R.layout.activity_google_sign_in)
+            supportActionBar?.setDisplayShowTitleEnabled(false)
 
 
-        val verify = findViewById<SignInButton>(R.id.google_SignIn)
-        (verify.getChildAt(0) as TextView).text = "Log in with Google"
-        auth = Firebase.auth
+            val verify = findViewById<SignInButton>(R.id.google_SignIn)
+            (verify.getChildAt(0) as TextView).text = "Log in with Google"
+            auth = Firebase.auth
 
-        createRequest()
+            createRequest()
 
-        verify.setOnClickListener {
-            signIn()
+            verify.setOnClickListener {
+                signIn()
+            }
         }
     }
 
@@ -94,6 +96,7 @@ class GoogleSignInActivity : AppCompatActivity() {
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e)
+                redirectToStart()
                 //Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
             }
         }
@@ -110,10 +113,21 @@ class GoogleSignInActivity : AppCompatActivity() {
                     currentUser= auth.currentUser
                     val intent = Intent(applicationContext,InitialFormActivity::class.java)
                     startActivity(intent)
+                    finish()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    redirectToStart()
                 }
             }
+    }
+
+    private fun redirectToStart() {
+        val intent = Intent(applicationContext,MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 }

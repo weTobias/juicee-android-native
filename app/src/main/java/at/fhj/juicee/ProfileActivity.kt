@@ -104,9 +104,13 @@ class ProfileActivity : AppCompatActivity() {
 
         logout?.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            val intent = Intent(applicationContext,GoogleSignInActivity::class.java)
+            val intent = Intent(applicationContext, GoogleSignInActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             Firebase.auth.signOut()
+            finish()
         }
     }
 

@@ -38,9 +38,11 @@ class MainActivity : AppCompatActivity() {
                             if (document.exists()) {
                                 val intent = Intent(applicationContext,MainScreenActivity::class.java)
                                 startActivity(intent)
+                                finish()
                             } else {
                                 val intent = Intent(applicationContext,InitialFormActivity::class.java)
                                 startActivity(intent)
+                                finish()
                             }
                         }
                         .addOnFailureListener { exception ->
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, GoogleSignInActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                     startActivity(intent)
+                    finish()
                 }
             }
         }
