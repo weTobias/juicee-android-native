@@ -1,9 +1,7 @@
 package at.fhj.juicee
 
-import android.content.BroadcastReceiver
-import android.content.Context
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -13,11 +11,11 @@ import android.text.style.RelativeSizeSpan
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import at.fhj.juicee.models.Beverage
 import at.fhj.juicee.models.BeverageConsumption
 import at.fhj.juicee.models.DailyBeverageConsumption
@@ -41,6 +39,12 @@ class MainScreenActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private var currentUser: FirebaseUser? = null
     private val NEEDED_FLUID_AMOUNT = 2500
+    private var dailyBeverageConsumption = DailyBeverageConsumption()
+    private var initialSetupDone = false
+    private lateinit var pieChart: PieChart
+    private var btnPlus: Button? = null
+    private var btnMinus: Button? = null
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,38 +52,7 @@ class MainScreenActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         db = Firebase.firestore
         currentUser = Firebase.auth.currentUser
-        if(currentUser != null){
-            val userInformationRef = db.collection("userInformation").document(currentUser!!.uid)
-            userInformationRef.get()
-                .addOnSuccessListener { document ->
-                    if (!document.exists()) {
-                        redirectToStart()
-                    } else {
-                        val userId = currentUser?.uid
-                        var dailyBeverageConsumption = DailyBeverageConsumption()
-                        val docRef = db.collection("dailyBeverageConsumptions").document(userId.toString()).collection("dailyConsumptions").document(
-                            (LocalDateTime.now()).format(
-                                DateTimeFormatter.BASIC_ISO_DATE))
-                        docRef.get().addOnSuccessListener { consumption ->
-                            if (consumption.exists()) {
-                                dailyBeverageConsumption = consumption.toObject<DailyBeverageConsumption>()!!
-                                setupScreen(dailyBeverageConsumption)
-                            } else {
-                                docRef.set(dailyBeverageConsumption).addOnSuccessListener { setupScreen(dailyBeverageConsumption) }.addOnFailureListener { _ ->
-                                    redirectToStart()
-                                }
-                            }
-                        }.addOnFailureListener { _ ->
-                            redirectToStart()
-                        }
-                    }
-                }
-                .addOnFailureListener { _ ->
-                    redirectToStart()
-                }
-        } else {
-            redirectToStart()
-        }
+        loadDataAndSetupScreen()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -97,43 +70,91 @@ class MainScreenActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun setupScreen(dailyBeverageConsumption: DailyBeverageConsumption) {
-        setContentView(R.layout.activity_main_screen)
+    override fun onResume() {
+        btnPlus?.setOnClickListener(null)
+        btnMinus?.setOnClickListener(null)
+        dailyBeverageConsumption = DailyBeverageConsumption()
+        loadDataAndSetupScreen()
+        super.onResume()
+    }
 
-        val pieChart = findViewById<PieChart>(R.id.mainScreenPieChart)
-        pieChart.setCenterTextSize(16f)
-        pieChart.setCenterTextColor(applicationContext.getColor(R.color.pieCenter))
-        pieChart.holeRadius = 48f
-        pieChart.transparentCircleRadius = 0f
-        val legend = pieChart.legend
-        legend.isEnabled = false
-        pieChart.description.isEnabled = false
-        pieChart.setEntryLabelTextSize(16f)
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun loadDataAndSetupScreen() {
+        if(currentUser != null){
+            val userInformationRef = db.collection("userInformation").document(currentUser!!.uid)
+            userInformationRef.get()
+                .addOnSuccessListener { document ->
+                    if (!document.exists()) {
+                        redirectToStart()
+                    } else {
+                        val userId = currentUser?.uid
+                        val docRef = db.collection("dailyBeverageConsumptions").document(userId.toString()).collection("dailyConsumptions").document(
+                            (LocalDateTime.now()).format(
+                                DateTimeFormatter.BASIC_ISO_DATE))
+                        docRef.get().addOnSuccessListener { consumption ->
+                            if (consumption.exists()) {
+                                dailyBeverageConsumption = consumption.toObject<DailyBeverageConsumption>()!!
+                                setupScreen()
+                            } else {
+                                docRef.set(dailyBeverageConsumption).addOnSuccessListener { setupScreen() }.addOnFailureListener { _ ->
+                                    redirectToStart()
+                                }
+                            }
+                        }.addOnFailureListener { _ ->
+                            redirectToStart()
+                        }
+                    }
+                }
+                .addOnFailureListener { _ ->
+                    redirectToStart()
+                }
+        } else {
+            redirectToStart()
+        }
+    }
 
-        val centerText = "0%\nHydration"
-        val indexCenterText = centerText.indexOf("\n")
-        val tempSpannable = SpannableString(centerText)
-        tempSpannable.setSpan(RelativeSizeSpan(3f), 0 , indexCenterText, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    @SuppressLint("SetTextI18n")
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setupScreen() {
+        if (!initialSetupDone) {
+            setContentView(R.layout.activity_main_screen)
 
-        pieChart.centerText = tempSpannable
+            pieChart = findViewById(R.id.mainScreenPieChart)
+            pieChart.setCenterTextSize(16f)
+            pieChart.setCenterTextColor(applicationContext.getColor(R.color.pieCenter))
+            pieChart.holeRadius = 48f
+            pieChart.transparentCircleRadius = 0f
+            val legend = pieChart.legend
+            legend.isEnabled = false
+            pieChart.description.isEnabled = false
+            pieChart.setEntryLabelTextSize(16f)
+
+            val centerText = "0%\nHydration"
+            val indexCenterText = centerText.indexOf("\n")
+            val tempSpannable = SpannableString(centerText)
+            tempSpannable.setSpan(RelativeSizeSpan(3f), 0 , indexCenterText, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            pieChart.centerText = tempSpannable
+
+            btnPlus = findViewById(R.id.btnMainPlus)
+            btnMinus = findViewById(R.id.btnMainMinus)
+
+            initialSetupDone = true
+        }
 
         val waterCount = findViewById<TextView>(R.id.mainWaterCount)
-        val waterCountText = waterCount.text.toString()
+        val waterCountText = applicationContext.getText(R.string.water_glasses).toString()
         var tempNumber = 0
         dailyBeverageConsumption.consumptions.forEach {
             if (it.beverage.name == "Water") {
                 tempNumber += 1
             }
         }
-        var tempText = waterCountText + tempNumber.toString()
-        waterCount.text = tempText
-
-        val btnPlus = findViewById<Button>(R.id.btnMainPlus)
-        val btnMinus = findViewById<Button>(R.id.btnMainMinus)
+        waterCount.text = waterCountText + tempNumber.toString()
 
         setPieData(pieChart, dailyBeverageConsumption)
 
-        btnPlus.setOnClickListener{
+        btnPlus?.setOnClickListener{
             tempNumber += 1
             db.collection("beverages").document("water").get().addOnSuccessListener { document ->
                 if (document.exists()) {
@@ -141,8 +162,7 @@ class MainScreenActivity : AppCompatActivity() {
                     db.collection("dailyBeverageConsumptions").document(currentUser?.uid.toString()).collection("dailyConsumptions").document(
                         (LocalDateTime.now()).format(
                             DateTimeFormatter.BASIC_ISO_DATE)).set(dailyBeverageConsumption).addOnSuccessListener {
-                                tempText = waterCountText + tempNumber.toString()
-                                waterCount.text = tempText
+                                waterCount.text = waterCountText + tempNumber.toString()
                                 setPieData(pieChart, dailyBeverageConsumption)
                             }
                 }
@@ -150,7 +170,7 @@ class MainScreenActivity : AppCompatActivity() {
                 redirectToStart()
             }
         }
-        btnMinus.setOnClickListener{
+        btnMinus?.setOnClickListener{
             if (tempNumber > 0) {
                 tempNumber -= 1
                 db.collection("beverages").document("water").get().addOnSuccessListener { document ->
@@ -164,8 +184,7 @@ class MainScreenActivity : AppCompatActivity() {
                         db.collection("dailyBeverageConsumptions").document(currentUser?.uid.toString()).collection("dailyConsumptions").document(
                             (LocalDateTime.now()).format(
                                 DateTimeFormatter.BASIC_ISO_DATE)).set(dailyBeverageConsumption).addOnSuccessListener {
-                            tempText = waterCountText + tempNumber.toString()
-                            waterCount.text = tempText
+                            waterCount.text = waterCountText + tempNumber.toString()
                             setPieData(pieChart, dailyBeverageConsumption)
                         }
                     }
@@ -203,7 +222,7 @@ class MainScreenActivity : AppCompatActivity() {
 
         val dataSet = PieDataSet(drinkData, "")
 
-        val colors = listOf<Int>(applicationContext.getColor(R.color.primaryBlue),
+        val colors = listOf(applicationContext.getColor(R.color.primaryBlue),
             applicationContext.getColor(R.color.sugarBlue),
             applicationContext.getColor(R.color.primaryYellow))
 

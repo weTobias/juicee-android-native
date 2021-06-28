@@ -89,13 +89,12 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
         android:fontFamily="@font/montserrat"
-        android:textStyle="bold"
-        android:text="Water glasses: "
+        android:text="@string/water_glasses"
         android:textColor="@color/primaryWhite"
         android:textSize="18dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-         />
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
