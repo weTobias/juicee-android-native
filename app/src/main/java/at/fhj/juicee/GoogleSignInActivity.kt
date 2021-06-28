@@ -15,7 +15,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import org.w3c.dom.Text
 
 
 class GoogleSignInActivity : AppCompatActivity() {
@@ -46,7 +45,7 @@ class GoogleSignInActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                 }
-                .addOnFailureListener { _ ->
+                .addOnFailureListener {
                     val intent = Intent(applicationContext,MainActivity::class.java)
                     startActivity(intent)
                 }

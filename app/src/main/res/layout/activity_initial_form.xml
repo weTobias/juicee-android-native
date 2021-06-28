@@ -233,7 +233,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/initalFormConfirmButton"
+        android:id="@+id/FormConfirmButton"
         style="@style/mainButtons"
         android:layout_width="123dp"
         android:fontFamily="@font/montserrat"

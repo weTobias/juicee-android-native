@@ -87,11 +87,11 @@
         style="@style/CustomInputLayoutStyle"
         android:layout_width="335dp"
         android:layout_height="65dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="60dp"
+
         android:textColorHint="@color/hintColor"
         app:hintTextColor="@color/inputBorderFocused"
-        app:layout_constraintBottom_toTopOf="@+id/initalFormConfirmButton"
-
+        app:layout_constraintBottom_toTopOf="@+id/FormConfirmButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editAgeInputLayout">
@@ -110,11 +110,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/initalFormConfirmButton"
+        android:id="@+id/FormConfirmButton"
         style="@style/mainButtons"
         android:layout_width="206dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="132dp"
+        android:layout_marginBottom="120dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/confirm_changes"
         android:textAllCaps="false"
@@ -128,14 +128,12 @@
         android:layout_width="195dp"
         android:layout_height="147dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="80dp"
         android:layout_marginEnd="100dp"
-        android:layout_marginBottom="21dp"
+        android:layout_marginBottom="40dp"
         android:contentDescription="@string/edit_profile_image_description"
         app:layout_constraintBottom_toTopOf="@+id/editHeightInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/avatar"
         tools:srcCompat="@drawable/avatar" />
 

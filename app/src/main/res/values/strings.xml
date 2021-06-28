@@ -17,4 +17,9 @@
     <string name="back_button_description">Back Button Description</string>
     <string name="edit_profile_image_description">Edit Profile Image Description</string>
     <string name="edit_activity_level_description">Edit Activity Level Description</string>>
+
+    <string name="activity_level">Activiy Level</string>>
+    <string name="age">Age</string>>
+    <string name="height">Height</string>>
+    <string name="weight">Weight</string>>
 </resources>

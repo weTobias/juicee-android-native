@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -21,7 +20,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class InitialFormActivity : AppCompatActivity() {
-    private val TAG : String = "InitialFormActivity"
     private lateinit var db: FirebaseFirestore
     private var currentUser: FirebaseUser? = null
 
@@ -45,7 +43,7 @@ class InitialFormActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                 }
-                .addOnFailureListener { _ ->
+                .addOnFailureListener {
                     val intent = Intent(applicationContext,MainActivity::class.java)
                     startActivity(intent)
                 }
@@ -61,16 +59,16 @@ class InitialFormActivity : AppCompatActivity() {
 
         btnPlus.setOnClickListener{
             waterNumber += 1
-            waterNumberInitialForm.setText(waterNumber.toString())
+            waterNumberInitialForm.text = waterNumber.toString()
         }
         btnMinus.setOnClickListener{
             if (waterNumber > 0) {
                 waterNumber -= 1
-                waterNumberInitialForm.setText(waterNumber.toString())
+                waterNumberInitialForm.text = waterNumber.toString()
             }
         }
 
-        val btnSubmit = findViewById<Button>(R.id.initalFormConfirmButton)
+        val btnSubmit = findViewById<Button>(R.id.FormConfirmButton)
         btnSubmit.setOnClickListener {
             val heightInput = findViewById<TextInputEditText>(R.id.heightInput)
             val weightInput = findViewById<TextInputEditText>(R.id.weightInput)
@@ -100,11 +98,11 @@ class InitialFormActivity : AppCompatActivity() {
                                 startActivity(intent)
                             }
                         }
-                    }.addOnFailureListener { _ ->
+                    }.addOnFailureListener {
                         val intent = Intent(applicationContext,MainActivity::class.java)
                         startActivity(intent)
                     }
-                }.addOnFailureListener { _ ->
+                }.addOnFailureListener {
                     val intent = Intent(applicationContext,MainActivity::class.java)
                     startActivity(intent)
                 }
