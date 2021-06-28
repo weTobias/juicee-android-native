@@ -104,8 +104,9 @@ class EditProfileActivity : AppCompatActivity() {
                 "weight" to weightInput.text.toString().toDouble()
             ))
         }
-
     }
+
+    //lets you choose a picture from the device
     private fun choosePicture(){
         val intent = Intent()
         intent.type = "image/*"
@@ -119,6 +120,8 @@ class EditProfileActivity : AppCompatActivity() {
         if(requestCode == 1 && data != null && data.data !=null){
             imageURI = data.data!!
             image.setImageURI(imageURI)
+
+            //starts the upload process
             uploadPicture()
         }
     }
@@ -126,8 +129,13 @@ class EditProfileActivity : AppCompatActivity() {
     private fun uploadPicture(){
         //Progress Dialog for showing the progress of the download
         val pd = ProgressDialog(this)
+
+        //key for naming the file
         val randomKey : String = UUID.randomUUID().toString()
+
+        //set the key of the image in the shared preferences
         imageKey(randomKey)
+
         val riversRef = storageReference.child("images/$randomKey")
         //Title of Dialog
         pd.setTitle("Uploading Image")

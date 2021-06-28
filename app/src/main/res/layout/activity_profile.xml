@@ -12,14 +12,15 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="97dp"
         android:layout_marginBottom="50dp"
-        android:text="3.0"
+        android:text="0.0"
         app:layout_constraintBottom_toTopOf="@+id/FormConfirmButton"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/google_SignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/mainButtons"
+        android:layout_width="151dp"
+        android:layout_height="61dp"
         android:layout_marginStart="158dp"
         android:layout_marginEnd="159dp"
         android:layout_marginBottom="40dp"
@@ -61,7 +62,6 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/FormConfirmButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
@@ -93,6 +93,7 @@
         android:contentDescription="@string/back_button_description"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_back_button"
+        android:background="@drawable/btn_round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,6 +106,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginBottom="60dp"
         android:text="@string/activity_level"
+        android:fontFamily="@font/roboto"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/height"
         app:layout_constraintStart_toStartOf="parent" />
@@ -116,6 +118,7 @@
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="60dp"
         android:text="@string/age"
+        android:fontFamily="@font/roboto"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/weight"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -127,6 +130,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginBottom="80dp"
         android:text="@string/height"
+        android:fontFamily="@font/roboto"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/FormConfirmButton"
         app:layout_constraintStart_toStartOf="parent" />
@@ -138,6 +142,7 @@
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="80dp"
         android:text="@string/weight"
+        android:fontFamily="@font/roboto"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/FormConfirmButton"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -148,6 +153,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
         android:layout_marginBottom="30dp"
+        android:fontFamily="@font/roboto"
         android:text="0"
         app:layout_constraintBottom_toTopOf="@+id/height"
         app:layout_constraintStart_toStartOf="parent" />
@@ -158,6 +164,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="28dp"
+        android:fontFamily="@font/roboto"
         android:text="0"
         app:layout_constraintBottom_toTopOf="@+id/weight"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -168,7 +175,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
         android:layout_marginBottom="50dp"
-        android:text="0"
+        android:fontFamily="@font/roboto"
+        android:text="0.0"
         app:layout_constraintBottom_toTopOf="@+id/FormConfirmButton"
         app:layout_constraintStart_toStartOf="parent" />
 
