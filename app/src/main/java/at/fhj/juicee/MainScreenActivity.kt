@@ -55,8 +55,9 @@ class MainScreenActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                 }
-                .addOnFailureListener { exception ->
-                    Log.d(TAG, "get failed with ", exception)
+                .addOnFailureListener { _ ->
+                    val intent = Intent(applicationContext,MainActivity::class.java)
+                    startActivity(intent)
                 }
         }
         val userId = currentUser?.uid
@@ -69,8 +70,14 @@ class MainScreenActivity : AppCompatActivity() {
                 dailyBeverageConsumption = document.toObject<DailyBeverageConsumption>()!!
                 setupScreen(dailyBeverageConsumption)
             } else {
-                docRef.set(dailyBeverageConsumption).addOnSuccessListener { setupScreen(dailyBeverageConsumption) }
+                docRef.set(dailyBeverageConsumption).addOnSuccessListener { setupScreen(dailyBeverageConsumption) }.addOnFailureListener { _ ->
+                    val intent = Intent(applicationContext,MainActivity::class.java)
+                    startActivity(intent)
+                }
             }
+        }.addOnFailureListener { _ ->
+            val intent = Intent(applicationContext,MainActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -126,25 +133,29 @@ class MainScreenActivity : AppCompatActivity() {
         setPieData(pieChart, dailyBeverageConsumption)
 
         btnPlus.setOnClickListener{
+            tempNumber += 1
             db.collection("beverages").document("water").get().addOnSuccessListener { document ->
                 if (document.exists()) {
                     dailyBeverageConsumption.consumptions.add(BeverageConsumption(document.toObject<Beverage>()!!, 250))
                     db.collection("dailyBeverageConsumptions").document(currentUser?.uid.toString()).collection("dailyConsumptions").document(
                         (LocalDateTime.now()).format(
                             DateTimeFormatter.BASIC_ISO_DATE)).set(dailyBeverageConsumption).addOnSuccessListener {
-                                tempNumber += 1
                                 tempText = waterCountText + tempNumber.toString()
                                 waterCount.text = tempText
                                 setPieData(pieChart, dailyBeverageConsumption)
                             }
                 }
+            }.addOnFailureListener { _ ->
+                val intent = Intent(applicationContext,MainActivity::class.java)
+                startActivity(intent)
             }
         }
         btnMinus.setOnClickListener{
             if (tempNumber > 0) {
+                tempNumber -= 1
                 db.collection("beverages").document("water").get().addOnSuccessListener { document ->
                     if (document.exists()) {
-                        for (index in 0 until dailyBeverageConsumption.consumptions.size - 1) {
+                        for (index in 0 until dailyBeverageConsumption.consumptions.size) {
                             if (dailyBeverageConsumption.consumptions[index].beverage.name == "Water") {
                                 dailyBeverageConsumption.consumptions.removeAt(index)
                                 break
@@ -153,12 +164,14 @@ class MainScreenActivity : AppCompatActivity() {
                         db.collection("dailyBeverageConsumptions").document(currentUser?.uid.toString()).collection("dailyConsumptions").document(
                             (LocalDateTime.now()).format(
                                 DateTimeFormatter.BASIC_ISO_DATE)).set(dailyBeverageConsumption).addOnSuccessListener {
-                            tempNumber -= 1
                             tempText = waterCountText + tempNumber.toString()
                             waterCount.text = tempText
                             setPieData(pieChart, dailyBeverageConsumption)
                         }
                     }
+                }.addOnFailureListener { _ ->
+                    val intent = Intent(applicationContext,MainActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }

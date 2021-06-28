@@ -46,8 +46,9 @@ class GoogleSignInActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                 }
-                .addOnFailureListener { exception ->
-                    Log.d(TAG, "get failed with ", exception)
+                .addOnFailureListener { _ ->
+                    val intent = Intent(applicationContext,MainActivity::class.java)
+                    startActivity(intent)
                 }
         }
         setContentView(R.layout.activity_google_sign_in)

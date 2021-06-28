@@ -1,6 +1,8 @@
 package at.fhj.juicee
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -25,32 +27,37 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_start_screen)
 
         val btnStart = findViewById<Button>(R.id.startButton)
-        btnStart.setOnClickListener {
-            db = Firebase.firestore
-            currentUser = Firebase.auth.currentUser
-
-            if(currentUser != null){
-                val userInformationRef = db.collection("userInformation").document(currentUser!!.uid)
-                userInformationRef.get()
-                    .addOnSuccessListener { document ->
-                        if (document.exists()) {
-                            val intent = Intent(applicationContext,MainScreenActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            val intent = Intent(applicationContext,InitialFormActivity::class.java)
-                            startActivity(intent)
+        if (isNetworkAvailbale()) {
+            btnStart.setOnClickListener {
+                db = Firebase.firestore
+                currentUser = Firebase.auth.currentUser
+                if(currentUser != null){
+                    val userInformationRef = db.collection("userInformation").document(currentUser!!.uid)
+                    userInformationRef.get()
+                        .addOnSuccessListener { document ->
+                            if (document.exists()) {
+                                val intent = Intent(applicationContext,MainScreenActivity::class.java)
+                                startActivity(intent)
+                            } else {
+                                val intent = Intent(applicationContext,InitialFormActivity::class.java)
+                                startActivity(intent)
+                            }
                         }
-                    }
-                    .addOnFailureListener { exception ->
-                        Log.d(TAG, "get failed with ", exception)
-                    }
-            } else {
-                val intent = Intent(this, GoogleSignInActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                startActivity(intent)
+                        .addOnFailureListener { exception ->
+                            Log.d(TAG, "get failed with ", exception)
+                        }
+                } else {
+                    val intent = Intent(this, GoogleSignInActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    startActivity(intent)
+                }
             }
         }
+    }
 
-
+    fun  isNetworkAvailbale():Boolean{
+        val conManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val internetInfo =conManager.activeNetworkInfo
+        return internetInfo!=null && internetInfo.isConnected
     }
 }
