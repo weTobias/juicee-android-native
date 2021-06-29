@@ -70,6 +70,7 @@ class GoogleSignInActivity : AppCompatActivity() {
             verify.setOnClickListener {
                 signIn()
             }
+        }
     }
 
     // Configure Google Sign In
