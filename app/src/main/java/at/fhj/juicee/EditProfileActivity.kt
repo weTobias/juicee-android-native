@@ -1,11 +1,9 @@
 package at.fhj.juicee
 
 import android.app.ProgressDialog
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -22,9 +20,9 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
-import java.util.*
 
 class EditProfileActivity : AppCompatActivity() {
+
 
     private lateinit var image: ImageView
     private lateinit var imageURI : Uri
@@ -39,25 +37,30 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
 
-        val back = findViewById<ImageButton>(R.id.backButton)
+        //Initialize Inputs and Buttons
         val activityLevelInput: TextInputEditText = findViewById(R.id.activityLevelInput)
         val ageInput : TextInputEditText = findViewById(R.id.ageInput)
         val heightInput : TextInputEditText = findViewById(R.id.heightInput)
         val weightInput : TextInputEditText = findViewById(R.id.weightInput)
-        val btnSubmit = findViewById<Button>(R.id.FormConfirmButton)
+        val back : ImageButton  = findViewById(R.id.backButton)
+        val btnSubmit : Button = findViewById(R.id.FormConfirmButton)
 
+        //load Shared Preferences
         loadImageKey()
 
-        image = findViewById(R.id.editProfileImage)
+        //Initialize firebase, image globally
         storage = Firebase.storage
         storageReference = storage.reference
         db = Firebase.firestore
+        image = findViewById(R.id.editProfileImage)
 
+        //use Glide library to get image from Firebase storage
         storageReference.child("images/$imageKey").downloadUrl.addOnSuccessListener { taskSnapShot ->
            Glide.with(this).load(taskSnapShot).into(image)
         }
 
-            image.setOnClickListener{
+        //choose picture from your device when clicking on the image
+        image.setOnClickListener{
             choosePicture()
         }
 
@@ -78,22 +81,19 @@ class EditProfileActivity : AppCompatActivity() {
                     ageInput.setText(age.toString())
                     heightInput.setText(height.toString())
                     weightInput.setText(weight.toString())
-                } else {
-                    Log.d(TAG, "No such document")
                 }
             }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
+            .addOnFailureListener {
                 redirectToStart()
             }
 
         //Go Back to Profile
-        back?.setOnClickListener {
+        back.setOnClickListener {
             onBackPressed()
         }
 
-        btnSubmit?.setOnClickListener{
-
+        //submit the data when clicking on Button
+        btnSubmit.setOnClickListener{
             //Update Data of Database onClick
             val docRefUpdate = db.collection("userInformation").document(uid)
             docRefUpdate.update(mapOf(
@@ -133,22 +133,28 @@ class EditProfileActivity : AppCompatActivity() {
         //Progress Dialog for showing the progress of the download
         val pd = ProgressDialog(this)
 
-        //key for naming the file
-        val randomKey : String = UUID.randomUUID().toString()
-
         //set the key of the image in the shared preferences
         imageKey(uid)
 
+        //storage Reference with folder and name of file
         val riversRef = storageReference.child("images/$uid")
+
         //Title of Dialog
         pd.setTitle("Uploading Image")
+
+        //Show ProgressDialog
         pd.show()
+
+        //Starts UploadTask
         val uploadTask = imageURI.let { riversRef.putFile(it) }
 
         // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener {
 
+            //Removes ProgressDialog
             pd.dismiss()
+
+            //Gives User Feedback on Failure
             Toast.makeText(applicationContext, "Failed To Upload", Toast.LENGTH_SHORT).show()
         }.addOnProgressListener {  taskSnapshot ->
             //Show the percentage of the download
@@ -156,11 +162,16 @@ class EditProfileActivity : AppCompatActivity() {
             pd.setMessage("Progress:" + progressPercent.toInt() + "%")
 
         }.addOnSuccessListener {
+
+            //Removes ProgressDialog
             pd.dismiss()
+
+            //Gives User Feedback on Success
             Snackbar.make(findViewById(R.id.edit_profile_activity),"Image Uploaded",Snackbar.LENGTH_SHORT).show()
         }
     }
 
+    //Sets shared Preferences
     private fun imageKey(string: String) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val editor = sharedPreferences.edit()
@@ -168,6 +179,7 @@ class EditProfileActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    //loads shared Preferences
     private fun loadImageKey() {
          val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
          val key = sharedPreferences.getString("key", "")
@@ -176,6 +188,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+    //Override the back Button functionality to finish the activity when you leave it
     override fun onBackPressed() {
         val intent = Intent(applicationContext,ProfileActivity::class.java)
         startActivity(intent)
