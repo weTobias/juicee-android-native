@@ -101,7 +101,11 @@ class EditProfileActivity : AppCompatActivity() {
                 "age" to ageInput.text.toString().toLong(),
                 "height" to heightInput.text.toString().toDouble(),
                 "weight" to weightInput.text.toString().toDouble()
-            ))
+            )).addOnSuccessListener {
+                val intent = Intent(applicationContext,ProfileActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
     }
 
@@ -173,6 +177,8 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        val intent = Intent(applicationContext,ProfileActivity::class.java)
+        startActivity(intent)
         finish()
         super.onBackPressed()
     }

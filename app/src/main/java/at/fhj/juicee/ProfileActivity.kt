@@ -93,6 +93,7 @@ class ProfileActivity : AppCompatActivity() {
         edit?.setOnClickListener{
             val intent = Intent(applicationContext,EditProfileActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         back?.setOnClickListener {

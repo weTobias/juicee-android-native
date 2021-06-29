@@ -44,6 +44,9 @@ class MainScreenActivity : AppCompatActivity() {
     private lateinit var pieChart: PieChart
     private var btnPlus: Button? = null
     private var btnMinus: Button? = null
+    @RequiresApi(Build.VERSION_CODES.O)
+    private var timeString = (LocalDateTime.now()).format(
+        DateTimeFormatter.BASIC_ISO_DATE)
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -81,6 +84,8 @@ class MainScreenActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun loadDataAndSetupScreen() {
         if(currentUser != null){
+            timeString = (LocalDateTime.now()).format(
+                DateTimeFormatter.BASIC_ISO_DATE)
             val userInformationRef = db.collection("userInformation").document(currentUser!!.uid)
             userInformationRef.get()
                 .addOnSuccessListener { document ->
@@ -89,8 +94,7 @@ class MainScreenActivity : AppCompatActivity() {
                     } else {
                         val userId = currentUser?.uid
                         val docRef = db.collection("dailyBeverageConsumptions").document(userId.toString()).collection("dailyConsumptions").document(
-                            (LocalDateTime.now()).format(
-                                DateTimeFormatter.BASIC_ISO_DATE))
+                            timeString)
                         docRef.get().addOnSuccessListener { consumption ->
                             if (consumption.exists()) {
                                 dailyBeverageConsumption = consumption.toObject<DailyBeverageConsumption>()!!
@@ -160,8 +164,7 @@ class MainScreenActivity : AppCompatActivity() {
                 if (document.exists()) {
                     dailyBeverageConsumption.consumptions.add(BeverageConsumption(document.toObject<Beverage>()!!, 250))
                     db.collection("dailyBeverageConsumptions").document(currentUser?.uid.toString()).collection("dailyConsumptions").document(
-                        (LocalDateTime.now()).format(
-                            DateTimeFormatter.BASIC_ISO_DATE)).set(dailyBeverageConsumption).addOnSuccessListener {
+                        timeString).set(dailyBeverageConsumption).addOnSuccessListener {
                                 waterCount.text = waterCountText + tempNumber.toString()
                                 setPieData(pieChart, dailyBeverageConsumption)
                             }
@@ -182,8 +185,7 @@ class MainScreenActivity : AppCompatActivity() {
                             }
                         }
                         db.collection("dailyBeverageConsumptions").document(currentUser?.uid.toString()).collection("dailyConsumptions").document(
-                            (LocalDateTime.now()).format(
-                                DateTimeFormatter.BASIC_ISO_DATE)).set(dailyBeverageConsumption).addOnSuccessListener {
+                            timeString).set(dailyBeverageConsumption).addOnSuccessListener {
                             waterCount.text = waterCountText + tempNumber.toString()
                             setPieData(pieChart, dailyBeverageConsumption)
                         }
