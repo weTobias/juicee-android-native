@@ -16,7 +16,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_juicee_logo" />
+        app:srcCompat="@drawable/ic_juicee_logo"
+        android:contentDescription="@string/logo" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_SignIn"
@@ -39,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/montserrat"
-        android:text="Please log in"
+        android:text="@string/please_log_in"
         android:textColor="@color/primaryBlack"
         android:textSize="42sp"
         android:textStyle="bold"

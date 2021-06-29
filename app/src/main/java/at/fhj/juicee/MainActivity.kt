@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseUser
@@ -13,8 +12,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
+/**
+ * Starting activity.
+ *
+ * Checks for internet connection and routes to next activity based on session state
+ */
 class MainActivity : AppCompatActivity() {
-    private val TAG : String = "StartActivity"
     private lateinit var db: FirebaseFirestore
     private var currentUser: FirebaseUser? = null
 
@@ -44,9 +47,6 @@ class MainActivity : AppCompatActivity() {
                                 startActivity(intent)
                                 finish()
                             }
-                        }
-                        .addOnFailureListener { exception ->
-                            Log.d(TAG, "get failed with ", exception)
                         }
                 } else {
                     val intent = Intent(this, GoogleSignInActivity::class.java)

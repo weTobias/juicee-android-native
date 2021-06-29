@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryWhite"
@@ -15,7 +14,7 @@
         app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></com.github.mikephil.charting.charts.PieChart>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view"
@@ -47,8 +46,8 @@
             android:layout_height="230dp"
             android:backgroundTint="@color/addDrinkButton"
             android:elevation="2dp"
-            android:text="ADD DRINK"
-            android:textSize="28dp"
+            android:text="@string/add_drink"
+            android:textSize="28sp"
             android:textStyle="bold"
             app:cornerRadius="14dp" />
 
@@ -66,8 +65,8 @@
                 android:layout_height="110dp"
                 android:backgroundTint="@color/plusButton"
                 android:elevation="1dp"
-                android:text="+"
-                android:textSize="50dp"
+                android:text="@string/plus"
+                android:textSize="50sp"
                 app:shapeAppearanceOverlay="@style/mainScreenPlusMinusShape" />
 
             <com.google.android.material.button.MaterialButton
@@ -76,8 +75,8 @@
                 android:layout_width="170dp"
                 android:layout_height="85dp"
                 android:backgroundTint="@color/minusButton"
-                android:text="-"
-                android:textSize="50dp"
+                android:text="@string/minus"
+                android:textSize="50sp"
                 app:shapeAppearanceOverlay="@style/mainScreenPlusMinusShape" />
         </LinearLayout>
 
@@ -87,11 +86,11 @@
         android:id="@+id/mainWaterCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/water_glasses"
         android:textColor="@color/primaryWhite"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout" />

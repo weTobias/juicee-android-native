@@ -56,7 +56,7 @@ class GoogleSignInActivity : AppCompatActivity() {
 
 
             val verify = findViewById<SignInButton>(R.id.google_SignIn)
-            (verify.getChildAt(0) as TextView).text = "Log in with Google"
+            (verify.getChildAt(0) as TextView).text = getString(R.string.log_in_with_google)
             auth = Firebase.auth
 
             createRequest()

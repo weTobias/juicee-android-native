@@ -13,7 +13,7 @@
         android:layout_height="74dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/leckerli_one"
-        android:text="Juicee"
+        android:text="@string/juicee"
         android:textAlignment="center"
         android:textColor="@color/primaryBlack"
         android:textSize="50sp"
@@ -34,13 +34,14 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_juicee_logo" />
+        app:srcCompat="@drawable/ic_juicee_logo"
+        android:contentDescription="@string/logo"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/startButton"
         style="@style/mainButtons"
         android:layout_width="203dp"
-        android:text="Ready to hydrate?"
+        android:text="@string/ready_to_hydrate"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -25,11 +25,12 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:fontFamily="@font/roboto"
-            android:hint="Height (cm)"
+            android:hint="@string/height_cm"
             android:inputType="number"
             android:paddingStart="16dp"
             android:textColor="@color/primaryBlack"
-            android:textCursorDrawable="@null" />
+            android:textCursorDrawable="@null"
+            tools:ignore="RtlSymmetry" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -50,11 +51,12 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:fontFamily="@font/roboto"
-            android:hint="Weight (kg)"
+            android:hint="@string/weight_kg"
             android:inputType="number"
             android:paddingStart="16dp"
             android:textColor="@color/primaryBlack"
-            android:textCursorDrawable="@null" />
+            android:textCursorDrawable="@null"
+            tools:ignore="RtlSymmetry" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -75,11 +77,12 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:fontFamily="@font/roboto"
-            android:hint="Age"
+            android:hint="@string/age"
             android:inputType="number"
             android:paddingStart="16dp"
             android:textColor="@color/primaryBlack"
-            android:textCursorDrawable="@null" />
+            android:textCursorDrawable="@null"
+            tools:ignore="RtlSymmetry" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -100,13 +103,13 @@
             android:id="@+id/activityLevelInput"
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:contentDescription="@string/edit_activity_level_description"
             android:fontFamily="@font/roboto"
-            android:hint="Activity Level"
+            android:hint="@string/activity_level"
             android:inputType="number"
             android:paddingStart="16dp"
             android:textColor="@color/primaryBlack"
-            android:textCursorDrawable="@null" />
+            android:textCursorDrawable="@null"
+            tools:ignore="RtlSymmetry" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton

@@ -22,5 +22,22 @@
     <string name="age">Age</string>>
     <string name="height">Height</string>>
     <string name="weight">Weight</string>
-    <string name="water_glasses">"Water glasses: "</string>>
+    <string name="water_glasses">"Water glasses: "</string>
+    <string name="_0">0</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="how_much_did_you_drink_today">How much did you drink today?<br/>(250ml Glasses)</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="weight_kg">Weight (kg)</string>
+    <string name="height_cm">Height (cm)</string>
+    <string name="please_input_your_data">Please input your data</string>
+    <string name="logo">Logo</string>
+    <string name="please_log_in">Please log in</string>
+    <string name="add_drink">ADD DRINK</string>
+    <string name="_0_0">0.0</string>
+    <string name="juicee">Juicee</string>
+    <string name="ready_to_hydrate">Ready to hydrate?</string>
+    <string name="log_in_with_google">Log in with Google</string>
+    <string name="confirm">Confirm</string>
 </resources>

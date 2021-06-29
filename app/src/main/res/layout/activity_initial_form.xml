@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/montserrat"
-        android:text="Please input your data"
+        android:text="@string/please_input_your_data"
         android:textColor="@color/primaryBlack"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -40,11 +40,12 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:fontFamily="@font/roboto"
-            android:hint="Height (cm)"
+            android:hint="@string/height_cm"
             android:inputType="number"
             android:paddingStart="16dp"
             android:textColor="@color/primaryBlack"
-            android:textCursorDrawable="@null" />
+            android:textCursorDrawable="@null"
+            tools:ignore="RtlSymmetry" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -65,11 +66,12 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:fontFamily="@font/roboto"
-            android:hint="Weight (kg)"
+            android:hint="@string/weight_kg"
             android:inputType="number"
             android:paddingStart="16dp"
             android:textColor="@color/primaryBlack"
-            android:textCursorDrawable="@null" />
+            android:textCursorDrawable="@null"
+            tools:ignore="RtlSymmetry" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -90,11 +92,12 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:fontFamily="@font/roboto"
-            android:hint="Age"
+            android:hint="@string/age"
             android:inputType="number"
             android:paddingStart="16dp"
             android:textColor="@color/primaryBlack"
-            android:textCursorDrawable="@null" />
+            android:textCursorDrawable="@null"
+            tools:ignore="RtlSymmetry" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -115,11 +118,12 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:fontFamily="@font/roboto"
-            android:hint="Activity Level"
+            android:hint="@string/activity_level"
             android:inputType="number"
             android:paddingStart="16dp"
             android:textColor="@color/primaryBlack"
-            android:textCursorDrawable="@null" />
+            android:textCursorDrawable="@null"
+            tools:ignore="RtlSymmetry" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButtonToggleGroup
@@ -140,7 +144,7 @@
             style="@style/GenderButton"
             android:layout_width="120dp"
             android:layout_height="60dp"
-            android:text="Male"
+            android:text="@string/male"
             tools:layout_editor_absoluteX="136dp"
             tools:layout_editor_absoluteY="497dp" />
 
@@ -149,7 +153,7 @@
             style="@style/GenderButton"
             android:layout_width="120dp"
             android:layout_height="60dp"
-            android:text="Female"
+            android:text="@string/female"
             tools:layout_editor_absoluteX="138dp"
             tools:layout_editor_absoluteY="559dp" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -160,7 +164,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/montserrat"
-        android:text="How much did you drink today?\n(250ml Glasses)"
+        android:text="@string/how_much_did_you_drink_today"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -186,7 +190,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat"
-            android:text="-"
+            android:text="@string/minus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -197,7 +201,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat"
-            android:text="+"
+            android:text="@string/plus"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -223,7 +227,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:inputType="none"
-                android:text="1"
+                android:text="@string/_0"
                 android:textAlignment="center"
                 android:textColor="@color/primaryBlack"
                 android:textCursorDrawable="@null" />
@@ -237,7 +241,7 @@
         style="@style/mainButtons"
         android:layout_width="123dp"
         android:fontFamily="@font/montserrat"
-        android:text="Confirm"
+        android:text="@string/confirm"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

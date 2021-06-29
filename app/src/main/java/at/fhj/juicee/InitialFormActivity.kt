@@ -19,6 +19,9 @@ import com.google.firebase.ktx.Firebase
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+/**
+ * Initial user input if no userdata exists.
+ */
 class InitialFormActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private var currentUser: FirebaseUser? = null
@@ -35,7 +38,9 @@ class InitialFormActivity : AppCompatActivity() {
         currentUser = Firebase.auth.currentUser
         userId = currentUser?.uid
 
+        // check if user is logged in. If not, redirect to sign in activity
         if(currentUser != null){
+            // check if user information exists. If not, setup screen
             val userInformationRef = db.collection("userInformation").document(currentUser!!.uid)
             userInformationRef.get()
                 .addOnSuccessListener { document ->
@@ -50,8 +55,14 @@ class InitialFormActivity : AppCompatActivity() {
                 .addOnFailureListener {
                     redirectToStart()
                 }
+        } else {
+            redirectToLogin()
         }
     }
+
+    /**
+     * Screen setup for data input and submission.
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setupScreen() {
         setContentView(R.layout.activity_initial_form)
@@ -74,6 +85,8 @@ class InitialFormActivity : AppCompatActivity() {
         }
 
         val btnSubmit = findViewById<Button>(R.id.FormConfirmButton)
+
+        // transform data and submit
         btnSubmit.setOnClickListener {
             val heightInput = findViewById<TextInputEditText>(R.id.heightInput)
             val weightInput = findViewById<TextInputEditText>(R.id.weightInput)
@@ -113,8 +126,24 @@ class InitialFormActivity : AppCompatActivity() {
             }
         }
     }
+
+    /**
+     * Start starting activity and close all other activities
+     */
     private fun redirectToStart() {
         val intent = Intent(applicationContext,MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
+
+    /**
+     * Start sign in activity and close all other activities
+     */
+    private fun redirectToLogin() {
+        val intent = Intent(applicationContext,GoogleSignInActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

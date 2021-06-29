@@ -11,7 +11,6 @@ import android.text.style.RelativeSizeSpan
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -33,9 +32,14 @@ import com.google.firebase.ktx.Firebase
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-
+/**
+ * Main screen activity.
+ *
+ * User can input drink data and display a pie chart, that shows hydration levels and drink data.
+ * Data gets saved to firebase.
+ * Redirects to starting activity if necessary data is missing, or data operation fails.
+ */
 class MainScreenActivity : AppCompatActivity() {
-    private val TAG : String = "MainScreenActivity"
     private lateinit var db: FirebaseFirestore
     private var currentUser: FirebaseUser? = null
     private val NEEDED_FLUID_AMOUNT = 2500
@@ -49,6 +53,9 @@ class MainScreenActivity : AppCompatActivity() {
         DateTimeFormatter.BASIC_ISO_DATE)
 
 
+    /**
+     * Setup activity
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,8 +88,12 @@ class MainScreenActivity : AppCompatActivity() {
         super.onResume()
     }
 
+    /**
+     * Load the needed data for the activity and call setup.
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun loadDataAndSetupScreen() {
+        // check if user is logged in. Redirect to login if not.
         if(currentUser != null){
             timeString = (LocalDateTime.now()).format(
                 DateTimeFormatter.BASIC_ISO_DATE)
@@ -93,9 +104,10 @@ class MainScreenActivity : AppCompatActivity() {
                         redirectToStart()
                     } else {
                         val userId = currentUser?.uid
-                        val docRef = db.collection("dailyBeverageConsumptions").document(userId.toString()).collection("dailyConsumptions").document(
-                            timeString)
+                        val docRef = db.collection("dailyBeverageConsumptions").document(userId.toString()).collection("dailyConsumptions")
+                            .document(timeString)
                         docRef.get().addOnSuccessListener { consumption ->
+                            // if consumption list exists, use it. If not, create new screen.
                             if (consumption.exists()) {
                                 dailyBeverageConsumption = consumption.toObject<DailyBeverageConsumption>()!!
                                 setupScreen()
@@ -113,13 +125,17 @@ class MainScreenActivity : AppCompatActivity() {
                     redirectToStart()
                 }
         } else {
-            redirectToStart()
+            redirectToLogin()
         }
     }
 
+    /**
+     * Set up the screen and insert data.
+     */
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setupScreen() {
+        // do only once on first call
         if (!initialSetupDone) {
             setContentView(R.layout.activity_main_screen)
 
@@ -158,24 +174,29 @@ class MainScreenActivity : AppCompatActivity() {
 
         setPieData(pieChart, dailyBeverageConsumption)
 
+        // add water
         btnPlus?.setOnClickListener{
             tempNumber += 1
+            waterCount.text = waterCountText + tempNumber.toString()
+            setPieData(pieChart, dailyBeverageConsumption)
             db.collection("beverages").document("water").get().addOnSuccessListener { document ->
                 if (document.exists()) {
                     dailyBeverageConsumption.consumptions.add(BeverageConsumption(document.toObject<Beverage>()!!, 250))
-                    db.collection("dailyBeverageConsumptions").document(currentUser?.uid.toString()).collection("dailyConsumptions").document(
-                        timeString).set(dailyBeverageConsumption).addOnSuccessListener {
-                                waterCount.text = waterCountText + tempNumber.toString()
-                                setPieData(pieChart, dailyBeverageConsumption)
-                            }
+                    db.collection("dailyBeverageConsumptions").document(currentUser?.uid.toString()).collection("dailyConsumptions").
+                    document(timeString).set(dailyBeverageConsumption).addOnFailureListener{_ ->
+                        redirectToStart()
+                    }
                 }
             }.addOnFailureListener { _ ->
                 redirectToStart()
             }
         }
+        // remove water
         btnMinus?.setOnClickListener{
             if (tempNumber > 0) {
                 tempNumber -= 1
+                waterCount.text = waterCountText + tempNumber.toString()
+                setPieData(pieChart, dailyBeverageConsumption)
                 db.collection("beverages").document("water").get().addOnSuccessListener { document ->
                     if (document.exists()) {
                         for (index in 0 until dailyBeverageConsumption.consumptions.size) {
@@ -184,11 +205,10 @@ class MainScreenActivity : AppCompatActivity() {
                                 break
                             }
                         }
-                        db.collection("dailyBeverageConsumptions").document(currentUser?.uid.toString()).collection("dailyConsumptions").document(
-                            timeString).set(dailyBeverageConsumption).addOnSuccessListener {
-                            waterCount.text = waterCountText + tempNumber.toString()
-                            setPieData(pieChart, dailyBeverageConsumption)
-                        }
+                        db.collection("dailyBeverageConsumptions").document(currentUser?.uid.toString()).collection("dailyConsumptions")
+                            .document(timeString).set(dailyBeverageConsumption).addOnFailureListener{_ ->
+                                redirectToStart()
+                            }
                     }
                 }.addOnFailureListener { _ ->
                     redirectToStart()
@@ -197,6 +217,9 @@ class MainScreenActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Start starting activity and close all other activities
+     */
     private fun redirectToStart() {
         val intent = Intent(applicationContext,MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -206,6 +229,21 @@ class MainScreenActivity : AppCompatActivity() {
         finish()
     }
 
+    /**
+     * Start sign in activity and close all other activities
+     */
+    private fun redirectToLogin() {
+        val intent = Intent(applicationContext,GoogleSignInActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
+
+    /**
+     * Set data for pie chart and refresh it
+     */
     private fun setPieData(pieChart: PieChart, dailyBeverageConsumption: DailyBeverageConsumption){
         val drinkData = ArrayList<PieEntry>()
         val consumptionMap: MutableMap<String, Float> = mutableMapOf()
