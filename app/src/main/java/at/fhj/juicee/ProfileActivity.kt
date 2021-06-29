@@ -1,9 +1,7 @@
 package at.fhj.juicee
 
-import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -23,6 +21,7 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 
 class ProfileActivity : AppCompatActivity() {
+
     private lateinit var storageReference: StorageReference
     private lateinit var storage : FirebaseStorage
     private lateinit var image: ImageView
@@ -34,33 +33,35 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        val back : ImageButton? = findViewById(R.id.backButton)
-        val name : TextView? = findViewById(R.id.user_name)
-        val logout : Button? =findViewById(R.id.google_SignIn)
-        val edit : Button? =findViewById(R.id.FormConfirmButton)
 
+        //Initialize Buttons and Texts
+        val name : TextView? = findViewById(R.id.user_name)
         val activityLevelValue : TextView = findViewById(R.id.activityLevelValue)
         val ageValue : TextView = findViewById(R.id.ageValue)
         val heightValue : TextView = findViewById(R.id.heightValue)
         val weightValue : TextView = findViewById(R.id.weightValue)
+        val back : ImageButton? = findViewById(R.id.backButton)
+        val edit : Button? =findViewById(R.id.FormConfirmButton)
+        val logout : Button? =findViewById(R.id.google_SignIn)
+        val acct : GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(applicationContext)
 
+
+        //Initialize firebase, image globally and text of user with Google Username
         image = findViewById(R.id.profileImage)
         storage = Firebase.storage
         storageReference = storage.reference
         db = Firebase.firestore
+        name?.text = acct?.displayName
 
 
-
+        //Get key for image of user from shared preferences
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val key = sharedPreferences.getString("key", "")
 
+        //use Glide library to get image from Firebase storage
         storageReference.child("images/$key").downloadUrl.addOnSuccessListener { taskSnapShot ->
             Glide.with(this).load(taskSnapShot).into(image)
         }
-
-        val acct : GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(applicationContext)
-
-        name?.text = acct?.displayName
 
 
         //get document from the collection with id of the current user
@@ -80,29 +81,22 @@ class ProfileActivity : AppCompatActivity() {
                     ageValue.text = age.toString()
                     heightValue.text = height.toString()
                     weightValue.text = weight.toString()
-                } else {
-                    Log.d(ContentValues.TAG, "No such document")
                 }
             }
-            .addOnFailureListener { exception ->
-                Log.d(ContentValues.TAG, "get failed with ", exception)
-            }
 
-
-
+        //Switch to EditProfile screen
         edit?.setOnClickListener{
             val intent = Intent(applicationContext,EditProfileActivity::class.java)
             startActivity(intent)
             finish()
         }
 
+        //Go Back one screen
         back?.setOnClickListener {
             onBackPressed()
         }
 
-
-
-
+        //go to Login screen
         logout?.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(applicationContext, GoogleSignInActivity::class.java)
@@ -115,6 +109,7 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    //Override the back Button functionality to finish the activity when you leave it
     override fun onBackPressed() {
         finish()
         super.onBackPressed()
